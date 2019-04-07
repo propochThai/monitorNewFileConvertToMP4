@@ -2,3 +2,4 @@ watchdog
 MySQL-python-1.2.5
 mysql-0.0.2
 configparser
+mysql-connector-python-rf
