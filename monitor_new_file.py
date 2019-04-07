@@ -32,9 +32,11 @@ class MyHandler(PatternMatchingEventHandler):
 
 
 if __name__ == '__main__':
-    ENV = config['DEFAULT']['ENV']
+    
     config = configparser.ConfigParser()
+    
     config.read('config.ini')
+    ENV = config['DEFAULT']['ENV']
     observer = Observer()
     observer.schedule(MyHandler(), path=config[ENV]['PATH_MONITOR'],recursive=True)
     observer.start()
