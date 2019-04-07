@@ -32,7 +32,7 @@ class MyHandler(PatternMatchingEventHandler):
 
 
 if __name__ == '__main__':
-    ENV = "STAGING"
+    ENV = config['ENV']
     config = configparser.ConfigParser()
     config.read('config.ini')
     observer = Observer()
