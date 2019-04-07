@@ -1,3 +1,3 @@
 watchdog
-mysql.connector
+mysql
 configparser
