@@ -14,6 +14,7 @@ class MyHandler(PatternMatchingEventHandler):
             file_log = "%s/monitor/%s-%s" % (config[ENV]['PATH_LOG'],prefix_file,"watch.log")
             logging.basicConfig(filename=file_log,level=logging.DEBUG, format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
             path_file = str(event.src_path).replace('../','/var/www/html/')
+            path_file = path_file.replace("\\","/")
             message = "Found new file:%s" % path_file
             logging.info(message)
             try:
