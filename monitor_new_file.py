@@ -32,7 +32,7 @@ class MyHandler(PatternMatchingEventHandler):
 
 
 if __name__ == '__main__':
-    ENV = config['ENV']
+    ENV = config['DEFAULT']['ENV']
     config = configparser.ConfigParser()
     config.read('config.ini')
     observer = Observer()
