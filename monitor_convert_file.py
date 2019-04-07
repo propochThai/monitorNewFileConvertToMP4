@@ -5,14 +5,14 @@ import configparser
 import subprocess
 
 if __name__ == '__main__':
-
     config = configparser.ConfigParser()
     config.read('config.ini')
+    ENV = config['DEFAULT']['ENV']
     mydb = mysql.connector.connect(
-                host=config['STAGING']["DB_HOST"],
-                user=config["STAGING"]["DB_USER"],
-                password=config["STAGING"]["DB_PASS"],
-                database=config["STAGING"]["DB_DATABASE"])
+                host=config[ENV]["DB_HOST"],
+                user=config[ENV]["DB_USER"],
+                password=config[ENV]["DB_PASS"],
+                database=config[ENV]["DB_DATABASE"])
     sql = "select count(*) as N  from tbl_watch where watch_status = 'Converting'"
     mycursor = mydb.cursor()
     mycursor.execute(sql)
