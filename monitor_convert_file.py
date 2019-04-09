@@ -25,16 +25,17 @@ if __name__ == '__main__':
     myresult = mycursor.fetchone()
     if(int(myresult[0]) ==0):
         #ready to check new file to convert
-        sql = "select * from tbl_watch where watch_status = 'Found' and DATE_ADD(watch_created,  INTERVAL %s MINUTE) < NOW() order by watch_created asc LIMIT 0,1 " % config[ENV]["DELAY_MINUTE_CONVERT"]
+        sql = "select * from tbl_watch where watch_status = 'Found' and DATE_ADD(watch_created,  INTERVAL %s MINUTE) < NOW() order by watch_created asc  " % config[ENV]["DELAY_MINUTE_CONVERT"]
         mycursor.execute(sql)
-        myresult = mycursor.fetchone()
-        if(myresult is not None):
+        rows = mycursor.fetchall()
+        
+        for row in rows:
             prefix_file = str(datetime.date.today())
             file_log = "%s/monitor/%s-%s" % (config[ENV]['PATH_LOG'],prefix_file,"convert.log")
             logging.basicConfig(filename=file_log,level=logging.DEBUG, format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
             
-            path_file =  myresult[1]
-            watchID = myresult[0]
+            path_file =  row[1]
+            watchID = row[0]
 
             message = "Found new file waiting convert:%s" % path_file
             logging.info(message)
