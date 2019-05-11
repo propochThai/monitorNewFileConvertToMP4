@@ -38,7 +38,7 @@ if __name__ == '__main__':
             path_file =  row[1]
             watchID = row[0]
 
-            message = "Found new file waiting convert at slot :%s" % (path_file,slot)
+            message = "Found new file waiting convert at slot %d :%s" % (path_file,slot)
             logging.info(message)
             try:
                 sql ="update tbl_watch set watch_status ='Converting',watch_converted=now() where watchID = %s " %(watchID)
