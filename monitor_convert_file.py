@@ -7,6 +7,7 @@ import logging
 import datetime
 if __name__ == '__main__':
     slot =  int(sys.argv[1])
+    print slot
     config = configparser.ConfigParser()
     config.read('config.ini')
     ENV = config['DEFAULT']['ENV']
