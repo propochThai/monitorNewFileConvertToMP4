@@ -25,8 +25,11 @@ class MyHandler(PatternMatchingEventHandler):
                     database=config[ENV]["DB_DATABASE"])
                 try:
                     mycursor = mydb.cursor()
-                    
-                    sql = "INSERT INTO tbl_watch (watch_src_file, watch_hash,watch_created,watch_status) VALUES ('%s', '%s',now(),'Found')" % (path_file,hash(path_file))
+                    global cont_slot
+                    cont_slot = cont_slot+1
+                    if(cont_slot > 10 ):
+                        cont_slot=0
+                    sql = "INSERT INTO tbl_watch (watch_src_file, watch_hash,watch_created,watch_status,slot) VALUES ('%s', '%s',now(),'Found')" % (path_file,hash(path_file),cont_slot)
                     mycursor.execute(sql)
                     mydb.commit()
                     mydb.close()
@@ -48,12 +51,14 @@ class MyHandler(PatternMatchingEventHandler):
     def on_created(self, event):
         self.process(event)
 
+ 
 
 if __name__ == '__main__':
     
     config = configparser.ConfigParser()
     
-
+    
+    cont_slot=0
     config.read('config.ini')
     ENV = config['DEFAULT']['ENV']
     observer = Observer()
