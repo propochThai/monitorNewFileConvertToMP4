@@ -6,6 +6,7 @@ import subprocess
 import logging
 import datetime
 if __name__ == '__main__':
+    slot =  int(sys.argv[1])
     config = configparser.ConfigParser()
     config.read('config.ini')
     ENV = config['DEFAULT']['ENV']
@@ -19,13 +20,13 @@ if __name__ == '__main__':
         t, v, tb = sys.exc_info()
         message = " Error cannot connect DB:%s" % v
         logging.error(message)
-    sql = "select count(*) as N  from tbl_watch where watch_status = 'Converting'"
+    sql = "select count(*) as N  from tbl_watch where watch_status = 'Converting' and slot = %d" % (slot)
     mycursor = mydb.cursor()
     mycursor.execute(sql)
     myresult = mycursor.fetchone()
     if(int(myresult[0]) ==0):
         #ready to check new file to convert
-        sql = "select * from tbl_watch where watch_status = 'Found' and DATE_ADD(watch_created,  INTERVAL %s MINUTE) < NOW() order by watch_created asc  " % config[ENV]["DELAY_MINUTE_CONVERT"]
+        sql = "select * from tbl_watch where watch_status = 'Found' and DATE_ADD(watch_created,  INTERVAL %s MINUTE) < NOW() and slot = %d order by watch_created asc  " % (config[ENV]["DELAY_MINUTE_CONVERT"],slot)
         mycursor.execute(sql)
         rows = mycursor.fetchall()
         
@@ -37,7 +38,7 @@ if __name__ == '__main__':
             path_file =  row[1]
             watchID = row[0]
 
-            message = "Found new file waiting convert:%s" % path_file
+            message = "Found new file waiting convert at slot :%s" % (path_file,slot)
             logging.info(message)
             try:
                 sql ="update tbl_watch set watch_status ='Converting',watch_converted=now() where watchID = %s " %(watchID)
