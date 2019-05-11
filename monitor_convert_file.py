@@ -47,8 +47,8 @@ if __name__ == '__main__':
                 destination_path = path_file.replace(".avi",".mp4")
                 message = "converting from %s to %s" % (path_file,destination_path)
                 logging.info(message)
-                subprocess.call(["ffmpeg", "-i", path_file, destination_path])
-                
+                subprocess.call(["ffmpeg","-y","-i", path_file,,"-threads","6","-codec","copy","-preset","ultrafast",destination_path])
+
                 sql ="update tbl_watch set watch_status ='Done',watch_completed=now() where watchID = %s " %(watchID)
                 mycursor.execute(sql)
                 mydb.commit()
