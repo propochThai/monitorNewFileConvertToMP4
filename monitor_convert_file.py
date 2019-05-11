@@ -7,7 +7,7 @@ import logging
 import datetime
 if __name__ == '__main__':
     slot =  int(sys.argv[1])
-    print slot
+    
     config = configparser.ConfigParser()
     config.read('config.ini')
     ENV = config['DEFAULT']['ENV']
@@ -39,7 +39,7 @@ if __name__ == '__main__':
             path_file =  row[1]
             watchID = row[0]
 
-            message = "Found new file waiting convert at slot %d :%s" % (path_file,slot)
+            message = "Found new file waiting convert at slot %d :%s" % (slot,path_file)
             logging.info(message)
             try:
                 sql ="update tbl_watch set watch_status ='Converting',watch_converted=now() where watchID = %s " %(watchID)
