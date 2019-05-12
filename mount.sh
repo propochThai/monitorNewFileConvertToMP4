@@ -1,0 +1,1 @@
+mount.cifs  //iqtech2016/record_file   /var/www/html/gStorage/RECORD_FILE -o user=administrator,password=#D3LL@ug18   /var/www/html/gStorage/RECORD_FILE -o user=administrator 
