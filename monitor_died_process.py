@@ -24,7 +24,7 @@ def connectDB():
         logging.error(message)
         return False, "error"
 def KillJob(slot,logging):
-    pidFile = "./process_%s.pid" % (slot)
+    pidFile = "/opt/monitorNewFileConvertToMP4/process_%s.pid" % (slot)
     if  os.path.isfile(pidFile):
         #Have file then kill the job
         f = open(pidFile, "r")
